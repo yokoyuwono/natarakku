@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Natarakku Coffee — Slow Coffee, Roasted With Intention</title>
+<meta name="description" content="Natarakku Coffee Roasters — slow, single-origin, precision-roasted coffee. It's not a haste, it's a craft." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Permanent+Marker&family=DM+Mono:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --cream:#f1ede6;
+    --cream-2:#e8e2d8;
+    --black:#0a0806;
+    --ink:#17140f;
+    --orange:#f0561e;
+    --orange-deep:#d64a17;
+    --green:#2f9e4f;
+    --purple:#6b4b9a;
+    --paper-mut:#5c574e;
+    --paper-soft:#9a948a;
+    --line:#d9d2c6;
+    --font-marker:"Permanent Marker",cursive;
+    --font-cond:"Bebas Neue","Oswald",sans-serif;
+    --font-mono:"DM Mono",ui-monospace,"SFMono-Regular",monospace;
+    --ease:cubic-bezier(.22,.61,.21,1);
+    --cur:#f0561e;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:auto;overflow-anchor:none;overscroll-behavior-y:none}
+  body{
+    font-family:var(--font-mono);
+    color:var(--ink);
+    background:var(--cream);
+    overflow-x:clip;
+    overflow-anchor:none;
+    overscroll-behavior-y:none;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+    cursor:none;
+  }
+  a{color:inherit;text-decoration:none}
+  ::selection{background:var(--orange);color:var(--cream)}
+  .wrap{max-width:1280px;margin:0 auto;padding:0 40px}
+  .mono{font-family:var(--font-mono)}
+  .eyebrow{
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.18em;
+    text-transform:uppercase;color:var(--paper-mut);display:inline-flex;align-items:center;gap:10px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--cur);display:inline-block}
+
+  /* two-voice type */
+  .two{text-transform:uppercase;line-height:.9;letter-spacing:.5px}
+  .vk{font-family:var(--font-cond);font-weight:400}
+  .vm{font-family:var(--font-marker);font-weight:400}
+  .accent{color:var(--cur)}
+
+  /* ************ CURSOR ************ */
+  .cursor{position:fixed;top:0;left:0;width:26px;height:26px;border:2px solid var(--cur);
+    border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);
+    transition:width .25s var(--ease),height .25s var(--ease),background .25s,border-color .25s;
+    mix-blend-mode:difference;}
+  .cursor.down{width:12px;height:12px;background:var(--cur);border-color:var(--cur)}
+  .cursor.over{width:52px;height:52px;background:rgba(240,86,30,.12);border-color:var(--orange)}
+  @media (pointer:coarse){.cursor{display:none}body{cursor:auto}}
+
+  /* ************ NAV ************ */
+  header{position:fixed;top:0;left:0;right:0;height:76px;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;padding:0 30px;
+    transition:transform .4s var(--ease),background .4s;background:transparent;}
+  header.hide{transform:translateY(-100%)}
+  body.s-dark header{background:rgba(10,8,6,.6);backdrop-filter:blur(8px)}
+  .hamb{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:var(--cream);
+    display:grid;place-items:center;gap:5px;cursor:pointer;transition:.3s}
+  .hamb span{width:18px;height:2px;background:var(--ink);display:block;transition:.3s}
+  .brand{position:absolute;left:50%;transform:translateX(-50%);width:64px;height:64px}
+  .cart{width:46px;height:46px;border-radius:50%;border:1.5px solid var(--line);background:var(--cream);
+    display:grid;place-items:center;gap:5px;cursor:pointer;position:relative}
+  .cart b{position:absolute;top:-4px;right:-4px;background:var(--orange);color:var(--cream);
+    font-size:11px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-mono)}
+
+  /* ************ HERO ************ */
+  .hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;
+    padding:150px 0 90px;position:relative;background:
+      radial-gradient(1200px 600px at 85% -10%,#f8e3cf 0,transparent 60%),var(--cream);}
+  .hero-pills{display:flex;gap:12px;margin-bottom:34px;flex-wrap:wrap}
+  .pill{border:1.5px solid var(--line);border-radius:999px;padding:8px 16px;background:#fff0;
+    font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:8px;color:var(--ink)}
+  .pill .g{color:var(--green);font-weight:400}
+  .hero h1{font-size:clamp(46px,7.2vw,112px);margin:6px 0 4px}
+  .hero .sub{max-width:440px;color:var(--paper-mut);margin:22px 0 34px;font-size:15px}
+  .ctas{display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+  .btn{position:relative;display:inline-flex;align-items:center;gap:10px;cursor:none;
+    font-family:var(--font-mono);font-size:14px;letter-spacing:.04em;text-transform:uppercase;
+    padding:16px 26px;border-radius:40px;border:0;transition:.25s var(--ease)}
+  .btn.solid{background:var(--orange);color:var(--cream);box-shadow:5px 5px 0 #0a0806}
+  .btn.solid:hover{transform:translate(-2px,-2px);box-shadow:8px 8px 0 #0a0806}
+  .btn.ghost{background:transparent;border:1.5px solid var(--ink);color:var(--ink)}
+  .btn.ghost:hover{background:var(--ink);color:var(--cream)}
+  .btn .arw{transition:transform .3s}
+  .btn:hover .arw{transform:translateX(4px)}
+
+  /* hero bags montage */
+  .stage{position:relative;height:520px;overflow:hidden}
+  .halo{position:absolute;inset:0;display:grid;place-items:center}
+  .halo::before{content:"";width:440px;height:440px;border-radius:50%;
+    background:radial-gradient(rgba(240,86,30,.22) 22%,transparent 22%) 0 0/22px 22px;
+    filter:blur(1px)}
+  .bag{position:absolute;border-radius:16px;background:#fff;box-shadow:0 30px 50px -20px rgba(10,8,6,.4);
+    width:190px;padding-bottom:8px;overflow:hidden;transition:transform .5s var(--ease)}
+  .bag .top{height:150px;display:grid;place-items:center;position:relative}
+  .bag .lbl{padding:0 14px 12px;text-align:center}
+  .bag .kicker{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--paper-mut)}
+  .bag .name{font-family:var(--font-cond);font-size:24px;line-height:1;margin:6px 0 4px}
+  .bag .origin{font-size:10px;color:var(--paper-soft)}
+  .bag.b1{left:2%;top:60px;transform:rotate(-6deg);z-index:2}
+  .bag.b2{left:50%;top:34px;transform:translateX(-50%);z-index:3}
+  .bag.b3{right:2%;top:66px;transform:rotate(6deg);z-index:2}
+  .bag.b2 .top{background:#fdf0e0}
+  .bag.b3 .top{background:#e8e9f7}
+  .bag .top svg{width:96px;height:96px}
+  .bag-tag{position:absolute;right:2%;bottom:8px;background:#0a0806;color:var(--cream);
+    font-family:var(--font-mono);font-size:12px;padding:10px 16px;border-radius:40px;z-index:4}
+  .bag-tag b{color:var(--orange)}
+  @media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:120px}.stage{height:380px}}
+
+  /* ************ SECTIONS ************ */
+  section{position:relative}
+  .sec-h{padding:40px 0 30px}
+  .story{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:110px 0}
+  .story .num{font-family:var(--font-cond);font-size:22px;letter-spacing:.2em;color:var(--cur);margin-bottom:8px}
+  .story h2{font-size:clamp(38px,4.6vw,66px);margin:8px 0 4px}
+  .story p{color:var(--paper-mut);max-width:420px;font-size:14px;margin-top:16px}
+  .frame{position:relative;border-radius:20px;overflow:hidden;background:var(--cream-2)}
+  .frame img,.frame .art{display:block;width:100%;height:100%;object-fit:cover}
+  .frame.border--green{box-shadow:0 0 0 10px var(--cream),0 0 0 12px var(--green)}
+  .frame.border--purple{box-shadow:0 0 0 10px var(--cream),0 0 0 12px var(--purple)}
+  .frame.border--orange{box-shadow:0 0 0 10px var(--cream),0 0 0 12px var(--orange)}
+  .art{aspect-ratio:4/5;position:relative;overflow:hidden}
+  .art .cir{position:absolute;border:2px solid rgba(0,0,0,.12);border-radius:50%}
+  section.dark{background:var(--black);color:var(--cream)}
+  section.dark .eyebrow{color:var(--paper-soft)}
+  section.dark .story p{color:var(--paper-soft)}
+  section.dark .frame.border--green{box-shadow:0 0 0 10px var(--black),0 0 0 12px var(--green)}
+  section.dark .frame.border--purple{box-shadow:0 0 0 10px var(--black),0 0 0 12px var(--purple)}
+
+  /* ghost word */
+  .ghost{position:relative;overflow:hidden}
+  .ghost::before{content:attr(data-ghost);position:absolute;top:-38px;left:-8px;font-family:var(--font-cond);
+    font-size:clamp(90px,16vw,230px);line-height:1;color:rgba(0,0,0,.07);z-index:0;text-transform:uppercase;white-space:nowrap}
+  section.dark .ghost::before{color:rgba(255,255,255,.06)}
+  .ghost>*{position:relative;z-index:1}
+
+  /* BEST SELLERS — portrait bag spotlight carousel */
+  .sell{background:var(--black);color:var(--cream);padding:120px 0 90px;position:relative;overflow:hidden}
+  .sell .sec-head{max-width:1280px;margin:0 auto 14px;padding:0 40px}
+  .sell-stage{position:relative;max-width:1280px;margin:0 auto;padding:0 20px}
+  .sell-vp{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:70px 0 50px;gap:10px}
+  .sell-vp::-webkit-scrollbar{display:none}
+  .sell-item{flex:0 0 360px;scroll-snap-align:center;position:relative;padding:30px 8px 14px;display:flex;align-items:flex-end;justify-content:center;transition:.5s var(--ease)}
+  .sell-cone{position:absolute;left:50%;bottom:-50px;transform:translateX(-50%);width:340px;height:110%;opacity:0;transition:.5s;filter:blur(1px);
+    background:radial-gradient(rgba(90,199,219,.26) 22%,transparent 22%) 0 0/24px 24px;
+    clip-path:polygon(24% 0,76% 0,90% 100%,10% 100%)}
+  .sell-item.on .sell-cone{opacity:1}
+  .sell-tag{position:absolute;z-index:2;top:-18px;left:50%;transform:translateX(-50%);background:#fff;color:var(--ink);border-radius:12px;
+    padding:7px 13px;text-align:center;line-height:1.12;box-shadow:0 10px 22px -8px #000;opacity:0;transition:.4s;white-space:nowrap;border-radius:12px}
+  .sell-item.on .sell-tag{opacity:1}
+  .sell-tag small{display:block;font-size:8px;letter-spacing:.14em;color:var(--paper-mut);text-transform:uppercase;font-family:var(--font-mono)}
+  .sell-tag b{font-size:16px;font-family:var(--font-mono)}
+  .sell-art{position:relative;z-index:1;width:238px;filter:grayscale(.92);opacity:.72;transition:.5s var(--ease)}
+  .sell-item.on .sell-art{filter:none;opacity:1;transform:scale(1.05)}
+  .sell-art svg{width:100%;display:block}
+  .sell-arrow{position:absolute;top:50%;transform:translateY(-50%);width:58px;height:58px;border-radius:50%;border:1.5px solid rgba(255,255,255,.28);
+    background:rgba(4,3,2,.5);color:var(--cream);display:grid;place-items:center;cursor:none;z-index:5;transition:.3s;font-size:26px}
+  .sell-arrow:hover{background:var(--cur);border-color:var(--cur)}
+  .sell-arrow.left{left:-12px}
+  .sell-arrow.right{right:-12px}
+  .sell-meta{text-align:center;max-width:1280px;margin:6px auto 0;padding:0 40px;min-height:150px}
+  .sell-tags{display:flex;justify-content:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+  .sell-tags .chip{display:inline-flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--cream)}
+  .sell-tags .chip i{width:14px;height:14px;border-radius:50%;border:2px solid #c8913e;display:inline-block}
+  .sell-tags .chip.i i{border-color:var(--cur)}
+  .sell-tags .chip.n i{border-color:#8a6d3b}
+  .sell-name{font-family:var(--font-cond);font-size:clamp(40px,5vw,68px);letter-spacing:.5px;text-transform:uppercase;line-height:.95}
+  .sell-price{font-family:var(--font-mono);font-size:15px;color:var(--paper-soft);margin:14px 0 24px}
+  .sell-cta{display:inline-block}
+  @media(max-width:900px){.sell-item{flex:0 0 300px}.sell-art{width:206px}.sell-stage{padding:0 8px}.sell-arrow{width:46px;height:46px;font-size:22px}.sell-item .sell-tag{top:-12px}}
+
+  /* ************ STORY TIMELINE (native swipe) ************ */
+  .tl{position:relative;background:var(--black);color:var(--cream);padding:110px 0 50px;overflow:hidden}
+  .tl-head-wrap{width:100%;max-width:1280px;margin:0 auto;padding:0 40px;position:relative;z-index:2}
+  .tl-head{margin-bottom:6px}
+  .tl-scroll{display:flex;gap:76px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;padding:14px max(40px,calc((100vw - 1280px)/2 + 40px)) 34px}
+  .tl-scroll::-webkit-scrollbar{display:none}
+  .tcard{flex:0 0 300px;scroll-snap-align:center;background:#fff;color:var(--ink);border-radius:18px;padding:24px;box-shadow:0 26px 44px -22px #000;position:relative}
+  .tcard .year{font-family:var(--font-cond);font-size:58px;line-height:.9;color:var(--cur)}
+  .tcard .year .y{font-size:22px;color:var(--paper-soft);letter-spacing:.2em}
+  .tcard .ttl{font-family:var(--font-cond);font-size:24px;line-height:1;margin:14px 0 8px}
+  .tcard .txt{font-size:13px;color:var(--paper-mut);line-height:1.5}
+  .tcard .art{height:78px;border-radius:12px;background:var(--cream-2);margin-bottom:16px;position:relative;overflow:hidden}
+  .tcard .idx{position:absolute;top:18px;right:20px;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;color:var(--paper-soft)}
+  .tl-progress{margin-top:18px;display:flex;align-items:center;gap:16px}
+  .tl-progress .bar{height:3px;flex:1;background:rgba(255,255,255,.14);border-radius:3px;overflow:hidden}
+  .tl-progress .bar i{display:block;height:100%;width:0;background:var(--cur);border-radius:3px;transition:none}
+  .tl-progress .pct{font-family:var(--font-mono);font-size:12px;letter-spacing:.1em;color:var(--paper-soft)}
+  .tl-ctrl{display:flex;justify-content:center;gap:12px;margin-top:4px}
+  .tl-arrow{width:54px;height:54px;border-radius:50%;border:1.5px solid rgba(255,255,255,.25);background:rgba(4,3,2,.5);color:var(--cream);display:grid;place-items:center;cursor:none;transition:.3s;font-size:24px}
+  .tl-arrow:hover{background:var(--cur);border-color:var(--cur)}
+  @media(max-width:900px){.tl-head-wrap{padding:0 22px}.tcard{flex:0 0 286px}.tl-scroll{gap:46px;padding:14px 46px 30px}}
+  .board{position:relative;height:760px;border-radius:26px;overflow:hidden;
+    background:#24201a;box-shadow:inset 0 0 0 1px rgba(255,255,255,.06);margin-top:30px}
+  .papers{position:absolute;inset:0;perspective:1200px}
+  .paper{position:absolute;background:#111;color:#cfc8b8;width:260px;padding:16px 18px;border-radius:6px;
+    font-family:var(--font-cond);letter-spacing:.06em;
+    box-shadow:0 20px 40px -18px rgba(0,0,0,.7)}
+  .paper .head{font-size:26px;line-height:1;border-bottom:3px solid var(--cur);padding-bottom:8px;margin-bottom:8px;color:#f2ead8}
+  .paper .meta{font-size:11px;font-family:var(--font-mono);color:#8a8272;letter-spacing:.08em}
+  .card{position:absolute;width:270px;background:#fff;border-radius:16px;padding:22px;color:var(--ink);
+    box-shadow:0 26px 44px -20px rgba(0,0,0,.55);cursor:grab;user-select:none;touch-action:none;
+    transition:box-shadow .3s;will-change:transform}
+  .card:active{cursor:grabbing;box-shadow:0 46px 80px -30px rgba(0,0,0,.7)}
+  .card .tag{font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:var(--cur);text-transform:uppercase;margin-bottom:12px}
+  .card .ct{font-family:var(--font-cond);font-size:32px;line-height:.95;margin-bottom:8px}
+  .card .cd{font-size:13px;color:var(--paper-mut);line-height:1.5}
+  .card .art{height:86px;border-radius:12px;background:var(--cream-2);margin-bottom:14px;position:relative;overflow:hidden}
+  .card.on{cursor:grabbing}
+  .pin{position:absolute;width:14px;height:14px;border-radius:50%;box-shadow:0 2px 3px rgba(0,0,0,.4);z-index:5}
+  .drop-hint{text-align:center;color:var(--paper-mut);font-size:12px;letter-spacing:.08em;text-transform:uppercase;margin-top:20px}
+
+  /* ************ CTA BAND ************ */
+  .rev{background:var(--orange);color:var(--cream);padding:100px 0;position:relative;overflow:hidden}
+  .rev::after{content:"";position:absolute;inset:0;background:radial-gradient(circle at 20% 120%,rgba(0,0,0,.18),transparent 50%)}
+  .rev .in{position:relative;z-index:1}
+  .rev h2{font-size:clamp(40px,6vw,88px);margin-bottom:26px}
+  .rev h2 .vm{color:#231a10}
+  .rev .feats{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:34px}
+  .rev .feat{display:flex;align-items:center;gap:8px;font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
+  .rev .feat svg{width:20px;height:20px;stroke:#231a10}
+  .rev .btn.dark{background:#0a0806;color:var(--cream);box-shadow:6px 6px 0 rgba(0,0,0,.25)}
+  .rev .btn.dark:hover{transform:translate(-2px,-2px);box-shadow:9px 9px 0 rgba(0,0,0,.25)}
+
+  /* subscribe */
+  .subs{background:var(--cream);padding:90px 0;border-top:1px solid var(--line)}
+  .subs .grid{display:grid;grid-template-columns:1fr 1fr;gap:50px;align-items:center}
+  .subs h2{font-size:clamp(38px,5vw,70px)}
+  .plans{background:#fff;border-radius:22px;padding:26px;box-shadow:0 26px 46px -24px rgba(0,0,0,.25)}
+  .plans .opt{display:flex;align-items:center;justify-content:space-between;gap:14px;
+    padding:18px 6px;border-bottom:1px solid var(--line);cursor:pointer;transition:.2s}
+  .plans .opt:last-of-type{border-bottom:0}
+  .plans .opt.sel .rad{background:var(--cur);border-color:var(--cur)}
+  .plans .rad{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;transition:.2s}
+  .plans .rad::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff}
+  .plans .o-name{font-family:var(--font-cond);font-size:24px;line-height:1}
+  .plans .o-sub{font-size:11px;color:var(--paper-mut);letter-spacing:.05em}
+  .plans .o-p{font-family:var(--font-mono);font-size:14px}
+  .plans .save{background:var(--green);color:#fff;font-size:10px;padding:3px 8px;border-radius:20px;letter-spacing:.05em}
+  .plans .sum{margin-top:22px;display:flex;align-items:center;justify-content:space-between}
+  .plans .sum .l{font-size:12px;color:var(--paper-mut);letter-spacing:.08em}
+  .plans .sum .v{font-family:var(--font-cond);font-size:34px}
+  .plans .cta{width:100%;margin-top:16px}
+
+  /* footer */
+  footer{background:var(--black);color:var(--cream);padding:80px 0 40px}
+  footer .big{font-family:var(--font-cond);font-size:clamp(40px,7vw,96px);line-height:.92;text-transform:uppercase}
+  footer .big a{border-bottom:3px solid var(--cur);padding-bottom:6px;transition:.3s}
+  footer .big a:hover{color:var(--cur)}
+  footer .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:24px;margin-top:60px;padding-top:26px;border-top:1px solid rgba(255,255,255,.1)}
+  footer .col{display:flex;gap:22px;flex-direction:column}
+  footer .col a{color:var(--paper-soft);font-size:13px;letter-spacing:.06em;transition:.2s}
+  footer .col a:hover{color:var(--cream)}
+  footer .footnote{color:var(--paper-soft);font-size:12px;letter-spacing:.06em;margin-top:44px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
+
+  /* reveal */
+  .reveal{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+  .reveal.in{opacity:1;transform:none}
+  .delay-1{transition-delay:.1s}.delay-2{transition-delay:.22s}.delay-3{transition-delay:.34s}
+
+  /* marquee */
+  .ticker{overflow:hidden;white-space:nowrap;background:var(--black);color:var(--cream);padding:18px 0;border-top:1px solid rgba(255,255,255,.1)}
+  .ticker .trk{display:inline-block;animation:marq 24s linear infinite}
+  .ticker span{font-family:var(--font-cond);font-size:26px;letter-spacing:.06em;margin-right:40px;color:var(--paper-soft)}
+  .ticker span em{color:var(--cur);font-style:normal}
+  @keyframes marq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+  /* wave divider */
+  .wave{display:block;width:100%;height:70px;background:var(--cream)}
+  @media(max-width:900px){
+    .story{grid-template-columns:1fr;gap:30px;padding:70px 0}
+    .subs .grid{grid-template-columns:1fr}
+    .board{height:900px}
+    .wrap{padding:0 22px}
+    .hero{padding-top:110px}
+  }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+
+<!-- ============ NAV ============ -->
+<header id="hd">
+  <div class="hamb" data-mag><span></span><span></span></div>
+  <a class="brand" href="#top" aria-label="Natarakku home">
+    <svg viewBox="0 0 100 100"><defs><path id="c" d="M50,50 m-36,0 a36,36 0 1,1 72,0 a36,36 0 1,1 -72,0"/></defs>
+      <circle cx="50" cy="50" r="48" fill="#0a0806"/>
+      <text style="font-family:var(--font-cond);font-size:11px;letter-spacing:.14em;fill:#f1ede6"><textPath href="#c" startOffset="0">NATARAKKU COFFEE · ROASTERS · </textPath></text>
+      <svg x="30" y="30" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#f0561e" stroke-width="1.6"><path d="M8 3h8c0 3 2 3.5 2 6a6 6 0 0 1-12 0c0-2.5 2-3 2-6z"/><path d="M8 6h8"/></svg>
+    </svg>
+  </a>
+  <div class="cart" data-mag><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0a0806" stroke-width="1.7"><path d="M6 7h12l-1 13H7L6 7z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg><b>2</b></div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="wrap" style="position:relative;z-index:2">
+    <div class="hero-pills reveal">
+      <span class="pill"><span class="g">●</span> Small Batch</span>
+      <span class="pill">Single Origin</span>
+    </div>
+    <div class="eyebrow reveal delay-1"><span class="dot"></span> Roasted in the mountains · EST. 2021</div>
+    <h1 class="two reveal delay-1">
+      <span class="vk" style="display:block;font-size:clamp(34px,4vw,64px);color:var(--ink)">It's not a haste,</span>
+      <span class="vm">it's a <span class="accent">craft.</span></span>
+    </h1>
+    <p class="sub reveal delay-2">Natarakku is slow coffee for people who refuse to settle — a single origin at a time, roasted with intention, delivered to your door while it still smells like the roastery.</p>
+    <div class="ctas reveal delay-2">
+      <a class="btn solid" href="#shop" data-mag>Shop coffee <span class="arw">→</span></a>
+      <a class="btn ghost" href="#story" data-mag>Visit the roastery</a>
+    </div>
+    <div style="margin-top:26px" class="reveal delay-3">
+      <span class="pill" style="background:#0a0806;color:#f1ede6;border-color:#0a0806">Try the tasting bundle · <b style="color:var(--orange);font-weight:400">$32</b></span>
+    </div>
+  </div>
+
+  <div class="stage reveal" style="position:relative;z-index:1">
+    <div class="halo"></div>
+    <div class="bag b1"><div class="top" style="background:#fde8de"><svg viewBox="0 0 24 24" fill="none" stroke="#d64a17" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 9h18M12 3v18"/></svg></div><div class="lbl"><div class="kicker">No.01</div><div class="name">The Awakening</div><div class="origin">Single Origin · 250g</div></div></div>
+    <div class="bag b2"><div class="top" style="background:#fdf0e0"><svg viewBox="0 0 24 24" fill="none" stroke="#f0561e" stroke-width="1.2"><path d="M5 5c6 0 8 3 8 7s-2 7-8 7M13 7c3 0 5 2 5 5s-2 5-5 5"/></svg></div><div class="lbl"><div class="kicker">No.02</div><div class="name">The Wanderer</div><div class="origin">Single Origin · 250g</div></div></div>
+    <div class="bag b3"><div class="top" style="background:#e8e9f7"><svg viewBox="0 0 24 24" fill="none" stroke="#6b4b9a" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div><div class="lbl"><div class="kicker">No.03</div><div class="name">The Still</div><div class="origin">Single Origin · 250g</div></div></div>
+    <div class="bag-tag"><b>$32</b> · Starter Bundle</div>
+  </div>
+</section>
+
+<!-- ticker -->
+<div class="ticker"><div class="trk">
+  <span>Single Origin<em>·</em>Small Batch<em>·</em>Roasted to order<em>·</em>Kyoto-style<em>·</em></span>
+  <span>Single Origin<em>·</em>Small Batch<em>·</em>Roasted to order<em>·</em>Kyoto-style<em>·</em></span>
+</div></div>
+
+<!-- ============ STORY 01 ============ -->
+<section class="story-wrap" id="story">
+  <div class="wrap">
+    <div class="story">
+      <div class="ghost reveal" data-ghost="single"><div class="num">01</div>
+        <h2 class="two"><span class="vm">single.</span> <span class="vk">Origin only.</span></h2>
+        <p>One lot at a time. We chase farms, not blends — so every bag tells you exactly where it grew, how high, and who grew it. No mystery, no filler.</p>
+      </div>
+      <div class="frame border--green reveal delay-1">
+        <div class="art" style="background:linear-gradient(160deg,#2f9e4f,#163a22)">
+          <span class="cir" style="width:120px;height:120px;top:18%;left:20%"></span>
+          <span class="cir" style="width:60px;height:60px;bottom:16%;right:16%"></span>
+          <svg viewBox="0 0 200 200" style="position:absolute;inset:0;margin:auto;width:120px;height:120px;fill:none;stroke:#f1ede6;stroke-width:1.4"><circle cx="100" cy="100" r="42"/><path d="M100 58v84M58 100h84M70 70l60 60M130 70l-60 60"/></svg>
+          <div style="position:absolute;bottom:14px;left:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:#f1ede6">NATURA-CHER · YIRGACHEFFE · 1,900 MASL</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORY 02 (dark) ============ -->
+<section class="dark">
+  <div class="wrap">
+    <div class="story" style="grid-template-columns:.9fr 1.1fr">
+      <div class="frame border--purple reveal">
+        <div class="art" style="background:linear-gradient(160deg,#2a2038,#0f0a18)">
+          <svg viewBox="0 0 200 200" style="position:absolute;inset:0;margin:auto;width:120px;height:120px;fill:none;stroke:#b39ddb;stroke-width:1.4"><rect x="60" y="60" width="80" height="80" transform="rotate(45 100 100)"/><rect x="72" y="72" width="56" height="56" transform="rotate(45 100 100)"/></svg>
+          <div style="position:absolute;bottom:14px;right:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:#b39ddb">05°40′ · PROBATION ROAST</div>
+        </div>
+      </div>
+      <div class="ghost reveal delay-1" data-ghost="precision"><div class="num" style="color:#b39ddb">02</div>
+        <h2 class="two"><span class="vm">precision.</span> <span class="vk">To the second.</span></h2>
+        <p>Our little probing roaster reads the bean, not the timer. 200 grains at a time, monitored to moments, pulled at the exact crack of the first pop.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STORY 03 ============ -->
+<section class="story-wrap">
+  <div class="wrap">
+    <div class="story">
+      <div class="ghost reveal" data-ghost="patience"><div class="num">03</div>
+        <h2 class="two"><span class="vm">patience.</span> <span class="vk">Is the ingredient.</span></h2>
+        <p>48 hours of rest before we ship. We wait so you don't choke on the roast — building flavor, never burning it. Coffee, at the speed it deserves.</p>
+      </div>
+      <div class="frame border--orange reveal delay-1">
+        <div class="art" style="background:linear-gradient(160deg,#f0561e,#7a2410)">
+          <span class="cir" style="width:150px;height:150px;top:12%;right:12%;border-color:rgba(255,255,255,.25)"></span>
+          <svg viewBox="0 0 200 200" style="position:absolute;inset:0;margin:auto;width:110px;height:110px;fill:none;stroke:#f1ede6;stroke-width:1.3"><path d="M70 70l60 60M60 80a20 20 0 0 1 20-20M120 130a20 20 0 0 0 20-20"/></svg>
+          <div style="position:absolute;bottom:14px;left:16px;font-family:var(--font-mono);font-size:11px;letter-spacing:.14em;color:#fff3e8">RESTED 48H · SHIPPED D+2</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ BEST SELLERS ============ -->
+<section class="sell ghost" id="shop">
+  <div class="sec-head">
+    <div class="eyebrow" style="margin-bottom:8px"><span class="dot"></span> Fuel for the day</div>
+    <h2 class="two reveal" style="font-size:clamp(36px,5vw,72px)"><span class="vm">best</span> <span class="vk">sellers.</span></h2>
+  </div>
+  <div class="sell-stage">
+    <div class="sell-vp" id="sellVp"></div>
+    <button class="sell-arrow left" id="sellPrev" aria-label="Previous">‹</button>
+    <button class="sell-arrow right" id="sellNext" aria-label="Next">›</button>
+  </div>
+  <div class="sell-meta" id="sellMeta">
+    <div class="sell-tags" id="sellTags"></div>
+    <div class="sell-name" id="sellName">The Wanderer</div>
+    <div class="sell-price" id="sellPrice">from $12 · 250g</div>
+    <a class="btn solid sell-cta" href="#top" data-mag id="sellCta">Shop this <span class="arw">→</span></a>
+  </div>
+</section>
+
+<!-- ============ STORY TIMELINE (native swipe) ============ -->
+<section class="tl">
+  <div class="tl-head-wrap">
+    <div class="eyebrow" style="margin-bottom:8px"><span class="dot"></span> The story so far</div>
+    <div class="tl-head">
+      <h2 class="two reveal"><span class="vm">the story,</span> <span class="vk">year by year.</span></h2>
+      <div class="tl-progress"><span class="bar"><i id="tlbar"></i></span><span class="pct" id="tlpct">00%</span></div>
+    </div>
+  </div>
+  <div class="tl-scroll" id="tlscroll">
+          <div class="tcard"><div class="idx">01</div><div class="art"><svg viewBox="0 0 200 78" style="width:100%;height:100%"><rect width="200" height="78" fill="#fde8de"/><circle cx="60" cy="40" r="20" fill="#f0561e"/><path d="M60 20a20 20 0 0 1 20 30" fill="none" stroke="#0a0806" stroke-width="3"/></svg></div><div class="year">2019<span class="y"> · the spark</span></div><div class="ttl">One roaster, one idea.</div><div class="txt">A repair-shop roaster and a stubborn thought: the coffee you drink deserves more.</div></div>
+          <div class="tcard"><div class="idx">02</div><div class="art"><svg viewBox="0 0 200 78" style="width:100%;height:100%"><rect width="200" height="78" fill="#e8e9f7"/><path d="M20 60h160M40 60V40M80 60V30M120 60V42M160 60V26" stroke="#6b4b9a" stroke-width="3" fill="none"/></svg></div><div class="year">2021<span class="y"> · the long road</span></div><div class="ttl">Thirty farms, one promise.</div><div class="txt">We drove the highlands to meet the hands behind the beans — now they're our partners.</div></div>
+          <div class="tcard"><div class="idx">03</div><div class="art"><svg viewBox="0 0 200 78" style="width:100%;height:100%"><rect width="200" height="78" fill="#e4f2e6"/><circle cx="50" cy="40" r="18" stroke="#2f9e4f" stroke-width="3" fill="none"/><circle cx="150" cy="48" r="14" fill="#2f9e4f"/></svg></div><div class="year">2022<span class="y"> · the courtyard</span></div><div class="ttl">First courtyard café.</div><div class="txt">A roastery with a door you can walk through — coffee before the sun is up.</div></div>
+          <div class="tcard"><div class="idx">04</div><div class="art"><svg viewBox="0 0 200 78" style="width:100%;height:100%"><rect width="200" height="78" fill="#fde8de"/><path d="M100 64V14M100 26c-14 0-22-8-22-12M100 36c14 0 22-8 22-12" stroke="#d64a17" stroke-width="3" fill="none"/></svg></div><div class="year">2023<span class="y"> · the craft</span></div><div class="ttl">Precision to the second.</div><div class="txt">Our little probing roaster reads the bean, not the timer — pulled at the first crack.</div></div>
+          <div class="tcard"><div class="idx">05</div><div class="art"><svg viewBox="0 0 200 78" style="width:100%;height:100%"><rect width="200" height="78" fill="#f0ead9"/><rect x="40" y="30" width="120" height="24" rx="6" stroke="#f0561e" stroke-width="3" fill="none"/><path d="M88 42h24" stroke="#f0561e" stroke-width="3"/></svg></div><div class="year">2025<span class="y"> · the slow standard</span></div><div class="ttl">Rest 48h, ship D+2.</div><div class="txt">Building flavor, never burning it — shipped while it still smells like the roastery.</div></div>
+          <div class="tcard"><div class="idx">06</div><div class="art"><svg viewBox="0 0 200 78" style="width:100%;height:100%"><rect width="200" height="78" fill="#e4f2e6"/><path d="M40 24h80a16 16 0 0 1 0 32H40z" stroke="#2f9e4f" stroke-width="3" fill="none"/><path d="M128 40h14" stroke="#2f9e4f" stroke-width="3"/></svg></div><div class="year">2026<span class="y"> · the craft, onward</span></div><div class="ttl">Slower by design.</div><div class="txt">Every bag roasted to order, one origin, no shortcuts — coffee at the speed it deserves.</div></div>
+  </div>
+  <div class="tl-ctrl">
+    <button class="tl-arrow" id="tlPrev" aria-label="Previous">‹</button>
+    <button class="tl-arrow" id="tlNext" aria-label="Next">›</button>
+  </div>
+</section>
+
+<!-- ============ CTA BAND ============ -->
+<section class="rev">
+  <div class="wrap in">
+    <h2 class="two reveal"><span class="vm">ready for</span> <span class="vk">slow coffee?</span></h2>
+    <div class="feats reveal delay-1">
+      <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12l5 5 11-11"/></svg> Single origin</span>
+      <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12l5 5 11-11"/></svg> Small batch</span>
+      <span class="feat"><svg viewBox="0 0 24 24" fill="none" stroke-width="2"><path d="M4 12l5 5 11-11"/></svg> Family-owned</span>
+    </div>
+    <a class="btn dark" href="#shop" data-mag style="font-size:16px;padding:18px 30px">Shop all coffee <span class="arw">→</span></a>
+  </div>
+</section>
+
+<!-- ============ SUBSCRIBE ============ -->
+<section class="subs">
+  <div class="wrap grid">
+    <div>
+      <div class="eyebrow" style="margin-bottom:8px"><span class="dot"></span> Subscribe & save</div>
+      <h2 class="two reveal"><span class="vm">coffee on</span> <span class="vk">your schedule.</span></h2>
+      <p class="sub reveal delay-1" style="max-width:440px;color:var(--paper-mut);margin-top:16px">Never run out again. Lock your roast, pick a rhythm, and we'll ship it the morning after each order. Pause or cancel any time.</p>
+    </div>
+    <div class="plans reveal delay-1">
+      <div class="opt sel" data-p="0"> <div style="display:flex;align-items:center;gap:14px"><span class="rad"></span><div><div class="o-name">Every week</div><div class="o-sub">2 × 250g</div></div></div><div class="o-p">$23/mo <span class="save">SAVE 10%</span></div></div>
+      <div class="opt" data-p="1"><div style="display:flex;align-items:center;gap:14px"><span class="rad"></span><div><div class="o-name">Every fortnight</div><div class="o-sub">2 × 250g</div></div></div><div class="o-p">$22/mo <span class="save">SAVE 14%</span></div></div>
+      <div class="opt" data-p="2"><div style="display:flex;align-items:center;gap:14px"><span class="rad"></span><div><div class="o-name">Every month</div><div class="o-sub">2 × 250g</div></div></div><div class="o-p">$21/mo <span class="save">SAVE 18%</span></div></div>
+      <div class="sum"><span class="l">Your first delivery</span><span class="v" id="sumv">$23.00</span></div>
+      <a class="btn solid cta" href="#top" data-mag>Start subscription <span class="arw">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- wave into footer -->
+<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" style="background:#0a0806"><path d="M0 70h1440V30c-160-28-360-28-540-10S480 42 320 38 120 30 0 44z" fill="#f1ede6"/></svg>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap">
+    <div class="big reveal">Let's make your <a href="mailto:hello@natarakku.coffee">mornings slower.</a></div>
+    <div class="row">
+      <div class="col">
+        <a href="#top">Shop</a><a href="#story">Our story</a><a href="#shop">Café</a>
+      </div>
+      <div class="col">
+        <a href="#top">Subscriptions</a><a href="#top">Wholesale</a><a href="#top">Journal</a>
+      </div>
+      <div class="col">
+        <a href="mailto:hello@natarakku.coffee">hello@natarakku.coffee</a><a href="#top">Instagram</a>
+      </div>
+    </div>
+    <div class="footnote">
+      <span>© 2025 Natarakku Coffee Roasters</span>
+      <span>Slow coffee is not a figure of speech.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ canvasa particles (hero) ============ -->
+<canvas id="beans" style="position:fixed;inset:0;pointer-events:none;z-index:0"></canvas>
+
+<script>
+(function(){
+  var CURSOR=document.getElementById('cursor');
+  var mx=innerWidth/2,my=innerHeight/2,cx=mx,cy=my,scale=1;
+  document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;});
+  (function loop(){cx+=(mx-cx)*.16;cy+=(my-cy)*.16;CURSOR.style.transform='translate('+(cx)+'px,'+(cy)+'px) translate(-50%,-50%) scale('+scale+')';requestAnimationFrame(loop);})();
+  document.querySelectorAll('a,button,.card,.opt,.hamb,.cart').forEach(function(el){
+    el.addEventListener('mouseenter',function(){CURSOR.classList.add('over')});
+    el.addEventListener('mouseleave',function(){CURSOR.classList.remove('over')});
+  });
+  document.addEventListener('mousedown',function(){CURSOR.classList.add('down')});
+  document.addEventListener('mouseup',function(){CURSOR.classList.remove('down')});
+
+  // hide nav on scroll
+  var hd=document.getElementById('hd'),last=0;
+  window.addEventListener('scroll',function(){
+    var y=scrollY;
+    hd.classList.toggle('hide', y>90 && y>last);
+    document.body.classList.toggle('s-dark', document.querySelector('.sell').getBoundingClientRect().top<0);
+    last=y;
+  });
+
+  // reveal
+  var io=new IntersectionObserver(function(en){en.forEach(function(x){if(x.isIntersecting){x.target.classList.add('in');io.unobserve(x.target)}})},{threshold:.16});
+  document.querySelectorAll('.reveal').forEach(function(el){io.observe(el)});
+
+  // magnetic buttons
+  document.querySelectorAll('[data-mag]').forEach(function(b){
+    b.addEventListener('mousemove',function(e){var r=b.getBoundingClientRect();var dx=(e.clientX-r.left-r.width/2)*.22,dy=(e.clientY-r.top-r.height/2)*.22;b.style.transform='translate('+dx+'px,'+dy+'px)';b.style.transition='transform .12s'});
+    b.addEventListener('mouseleave',function(){b.style.transform='';b.style.transition='transform .4s var(--ease)'});
+  });
+
+  // ******** best sellers — portrait bag spotlight carousel ********
+  var PRODUCTS=[
+    {name:'The Awakening',origin:'Yirgacheffe · Light',price:'from $12',accent:'#d64a17',tags:[{t:'Floral',c:'i'},{t:'Honey',c:'i'},{t:'Light',c:'n'}]},
+    {name:'The Wanderer',origin:'Sumatra · Medium',price:'from $12',accent:'#f0561e',tags:[{t:'Caramel',c:'c'},{t:'Nutty',c:'n'},{t:'Medium',c:'i'}]},
+    {name:'The Still',origin:'Chiapas · Dark',price:'from $12',accent:'#6b4b9a',tags:[{t:'Chocolate',c:'i'},{t:'Smoky',c:'c'},{t:'Dark',c:'c'}]},
+    {name:'The Ground',origin:'Colombian · Decaf',price:'from $12',accent:'#2f9e4f',tags:[{t:'Cocoa',c:'n'},{t:'Smooth',c:'i'},{t:'Decaf',c:'i'}]},
+    {name:'The Slow',origin:'Blend · Espresso',price:'from $13',accent:'#c8860b',tags:[{t:'Cream',c:'c'},{t:'Espresso',c:'i'},{t:'Full',c:'n'}]},
+    {name:'The First',origin:'Single Origin',price:'from $14',accent:'#b0392b',tags:[{t:'Single',c:'i'},{t:'Bright',c:'c'},{t:'Citrus',c:'i'}]}
+  ];
+  function bagSVG(a,name,origin){
+    return '<svg viewBox="0 0 260 400" fill="none" xmlns="http://www.w3.org/2000/svg">'+
+      '<linearGradient id="g'+a.replace('#','')+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d1b17"/><stop offset="1" stop-color="#0e0d0a"/></linearGradient>'+
+      '<rect x="30" y="46" width="200" height="12" rx="6" fill="#11100c"/>'+
+      '<path d="M30 54 h200 v300 q0 22 -22 22 h-156 q-22 0 -22 -22 z" fill="url(#g'+a.replace('#','')+')"/>'+
+      '<rect x="30" y="54" width="200" height="16" fill="'+a+'" opacity="0.92"/>'+
+      '<rect x="52" y="100" width="156" height="204" rx="14" fill="#f4f0e6"/>'+
+      '<rect x="52" y="100" width="156" height="26" rx="13" fill="'+a+'"/>'+
+      '<text x="130" y="117" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="15" letter-spacing="1.2" fill="#fff">NATARAKKU</text>'+
+      '<text x="130" y="168" text-anchor="middle" font-family="Bebas Neue, sans-serif" font-size="24" letter-spacing=".4" fill="#0a0806">'+name.toUpperCase()+'</text>'+
+      '<line x1="72" y1="182" x2="188" y2="182" stroke="#d9d2c6"/>'+
+      '<text x="130" y="202" text-anchor="middle" font-family="DM Mono, monospace" font-size="8" letter-spacing="1" fill="#5c574e">'+origin.toUpperCase()+'</text>'+
+      '<circle cx="130" cy="248" r="34" fill="none" stroke="'+a+'" stroke-width="2.4"/>'+
+      '<circle cx="130" cy="248" r="10" fill="'+a+'"/>'+
+      '<path d="M130 214 v68 M96 248 h68" stroke="'+a+'" stroke-width="2.4"/>'+
+      '<text x="130" y="360" text-anchor="middle" font-family="DM Mono, monospace" font-size="7" letter-spacing="1" fill="#8b8578">SMALL BATCH · ROASTED TO ORDER · 250G</text>'+
+      '</svg>';
+  }
+  var sellVp=document.getElementById('sellVp');
+  sellVp.innerHTML=PRODUCTS.map(function(p,i){
+    return '<article class="sell-item'+(i===1?' on':'')+'" data-i="'+i+'">'+
+      '<span class="sell-cone"></span>'+
+      '<span class="sell-tag"><small>Starting at</small><b>'+p.price.replace('from ','$')+'</b></span>'+
+      '<div class="sell-art">'+bagSVG(p.accent,p.name,p.origin)+'</div></article>';
+  }).join('');
+  var sellItems=[].slice.call(sellVp.querySelectorAll('.sell-item'));
+  function sellMeta(i){var p=PRODUCTS[i];document.getElementById('sellName').textContent=p.name;
+    document.getElementById('sellPrice').textContent=p.price+' · 250g';
+    document.getElementById('sellTags').innerHTML=p.tags.map(function(tg){return '<span class="chip '+tg.c+'"><i></i>'+tg.t+'</span>'}).join('');}
+  function sellCenter(){var mid=sellVp.scrollLeft+sellVp.clientWidth/2,best=0,bd=1e9;
+    sellItems.forEach(function(it,i){var c=it.offsetLeft+it.offsetWidth/2,d=Math.abs(mid-c);if(d<bd){bd=d;best=i}});
+    sellItems.forEach(function(it,i){it.classList.toggle('on',i===best)});sellMeta(best);}
+  sellVp.addEventListener('scroll',function(){sellCenter()},{passive:true});sellCenter();
+  document.getElementById('sellPrev').onclick=function(){sellVp.scrollBy({left:-sellItems[0].offsetWidth*1.05,behavior:'smooth'})};
+  document.getElementById('sellNext').onclick=function(){sellVp.scrollBy({left:sellItems[0].offsetWidth*1.05,behavior:'smooth'})};
+  function sellInit(){sellItems[1].scrollIntoView({behavior:'auto',block:'nearest',inline:'center'});sellCenter();}
+  requestAnimationFrame(sellInit);window.addEventListener('resize',sellInit);
+
+  // plan toggle
+  var prices=['$23.00','$22.00','$21.00'],sum=document.getElementById('sumv');
+  document.querySelectorAll('.opt').forEach(function(o){
+    o.addEventListener('click',function(){
+      document.querySelectorAll('.opt').forEach(function(x){x.classList.remove('sel')});
+      o.classList.add('sel');sum.textContent=prices[+o.dataset.p];
+    });
+  });
+
+  // ******** story timeline — native horizontal swipe ********
+  var tlScroll=document.getElementById('tlscroll'),tlbar=document.getElementById('tlbar'),tlpct=document.getElementById('tlpct');
+  function tlProgress(){
+    var max=tlScroll.scrollWidth-tlScroll.clientWidth;
+    var p=max>0 ? tlScroll.scrollLeft/max : 0;
+    tlbar.style.width=(p*100)+'%';tlpct.textContent=Math.round(p*100)+'%';
+  }
+  tlScroll.addEventListener('scroll',tlProgress,{passive:true});
+  window.addEventListener('resize',tlProgress);
+  tlProgress();
+  document.getElementById('tlPrev').onclick=function(){tlScroll.scrollBy({left:-320,behavior:'smooth'})};
+  document.getElementById('tlNext').onclick=function(){tlScroll.scrollBy({left:320,behavior:'smooth'})};
+
+  // ******** canvas beans (physics-feel) — desktop only ********
+  var isTouch=window.matchMedia('(pointer:coarse)').matches;
+  if(!isTouch){
+  var cv=document.getElementById('beans'),cx2=cv.getContext('2d'),beans=[],W,H;
+  function rs(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+  window.addEventListener('resize',rs);rs();
+  for(var i=0;i<26;i++){beans.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,r:2+Math.random()*3});}
+  function frame(){
+    cx2.clearRect(0,0,W,H);
+    beans.forEach(function(b){
+      // gentle attraction to cursor
+      var dx=cx-b.x,dy=cy-b.y,d=Math.hypot(dx,dy)||1;
+      if(d<220){b.vx+=(dx/d)*-.24;b.vy+=(dy/d)*-.24;}
+      b.vx*=.965;b.vy*=.965;b.x+=b.vx;b.y+=b.vy;
+      if(b.x<0||b.x>W)b.vx*=-1;if(b.y<0||b.y>H)b.vy*=-1;
+      cx2.beginPath();cx2.arc(b.x,b.y,b.r,0,7);cx2.fillStyle='rgba(240,86,30,.6)';cx2.fill();
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+  }
+})();
+</script>
+</body>
+</html>
