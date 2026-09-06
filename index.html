@@ -33,14 +33,20 @@
     --cur:#f0561e;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:auto;overflow-anchor:none;overscroll-behavior-y:none}
+  /* overflow-anchor:none and overscroll-behavior-y:none were on both html and body.
+     They suppressed scroll anchoring (a browser feature that stops content jumping)
+     and killed pull-to-refresh on mobile — workarounds for jank that came from the
+     page-level particle canvas and the carousel's scrollIntoView, both since fixed. */
+  html{scroll-behavior:auto}
+  @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+  /* the header is fixed at 76px, so anchor targets need clearance or the heading
+     they point at lands underneath it */
+  :target,section[id],main[id]{scroll-margin-top:96px}
   body{
     font-family:var(--font-mono);
     color:var(--ink);
     background:var(--cream);
     overflow-x:clip;
-    overflow-anchor:none;
-    overscroll-behavior-y:none;
     -webkit-font-smoothing:antialiased;
     line-height:1.6;
     cursor:none;
@@ -205,9 +211,13 @@
   .sell{background:var(--black);color:var(--cream);padding:120px 0 90px;position:relative;overflow:hidden}
   .sell .sec-head{max-width:1280px;margin:0 auto 14px;padding:0 40px}
   .sell-stage{position:relative;max-width:1280px;margin:0 auto;padding:0 20px}
-  .sell-vp{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:70px 0 50px;gap:10px}
+  /* Side padding of half the rail minus half a card is what lets the FIRST and LAST
+     products reach the centre spotlight. Without it only the middle two could ever
+     be centred, so four of the six coffees were unreachable. */
+  .sell-vp{--sell-w:360px;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;
+    scrollbar-width:none;padding:70px calc(50% - var(--sell-w)/2) 50px;gap:10px}
   .sell-vp::-webkit-scrollbar{display:none}
-  .sell-item{flex:0 0 360px;scroll-snap-align:center;position:relative;padding:30px 8px 14px;display:flex;align-items:flex-end;justify-content:center;transition:transform .5s var(--ease)}
+  .sell-item{flex:0 0 var(--sell-w);scroll-snap-align:center;position:relative;padding:30px 8px 14px;display:flex;align-items:flex-end;justify-content:center;transition:transform .5s var(--ease)}
   .sell-cone{position:absolute;left:50%;bottom:-50px;transform:translateX(-50%);width:340px;height:110%;opacity:0;transition:opacity .5s;filter:blur(1px);
     background:radial-gradient(rgba(90,199,219,.26) 22%,transparent 22%) 0 0/24px 24px;
     clip-path:polygon(24% 0,76% 0,90% 100%,10% 100%)}
@@ -236,7 +246,7 @@
   .sell-price{font-family:var(--font-mono);font-size:15px;color:var(--paper-soft);margin:14px 0 24px}
   .sell-cta{display:inline-block}
   /* arrows sit flush at narrow widths — the -12px desktop overhang runs off a 375px screen */
-  @media(max-width:900px){.sell-item{flex:0 0 300px}.sell-art{width:206px}.sell-stage{padding:0 8px}
+  @media(max-width:900px){.sell-vp{--sell-w:300px}.sell-art{width:206px}.sell-stage{padding:0 8px}
     .sell-arrow{width:46px;height:46px;font-size:22px}
     .sell-arrow.left{left:2px}.sell-arrow.right{right:2px}
     .sell-item .sell-tag{top:-12px}}
@@ -431,7 +441,7 @@
 </section>
 
 <!-- ticker -->
-<div class="ticker"><div class="trk">
+<div class="ticker" data-tone="dark"><div class="trk">
   <span>Single Origin<em>·</em>Small Batch<em>·</em>Roasted to order<em>·</em>Kyoto-style<em>·</em></span>
   <span>Single Origin<em>·</em>Small Batch<em>·</em>Roasted to order<em>·</em>Kyoto-style<em>·</em></span>
 </div></div>
@@ -457,7 +467,7 @@
 </section>
 
 <!-- ============ STORY 02 (dark) ============ -->
-<section class="dark">
+<section class="dark" data-tone="dark">
   <div class="wrap">
     <div class="story" style="grid-template-columns:.9fr 1.1fr">
       <div class="frame border--purple reveal">
@@ -494,7 +504,7 @@
 </section>
 
 <!-- ============ BEST SELLERS ============ -->
-<section class="sell ghost" id="shop">
+<section class="sell ghost" id="shop" data-tone="dark">
   <div class="sec-head">
     <div class="eyebrow" style="margin-bottom:8px"><span class="dot"></span> Fuel for the day</div>
     <h2 class="two reveal" style="font-size:clamp(36px,5vw,72px)"><span class="vm">best</span> <span class="vk">sellers.</span></h2>
@@ -513,7 +523,7 @@
 </section>
 
 <!-- ============ STORY TIMELINE (native swipe) ============ -->
-<section class="tl">
+<section class="tl" data-tone="dark">
   <div class="tl-head-wrap">
     <div class="eyebrow" style="margin-bottom:8px"><span class="dot"></span> The story so far</div>
     <div class="tl-head">
@@ -573,10 +583,10 @@
 </main>
 
 <!-- wave into footer -->
-<svg class="wave" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" style="background:#0a0806"><path d="M0 70h1440V30c-160-28-360-28-540-10S480 42 320 38 120 30 0 44z" fill="#f1ede6"/></svg>
+<svg class="wave" data-tone="dark" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true" style="background:#0a0806"><path d="M0 70h1440V30c-160-28-360-28-540-10S480 42 320 38 120 30 0 44z" fill="#f1ede6"/></svg>
 
 <!-- ============ FOOTER ============ -->
-<footer>
+<footer data-tone="dark">
   <div class="wrap">
     <div class="big reveal">Let's make your <a href="mailto:hello@natarakku.coffee">mornings slower.</a></div>
     <div class="row">
@@ -651,7 +661,7 @@
   /* ---------------- header tint over dark bands ---------------- */
   feature('header-tone',function(){
     if(!('IntersectionObserver' in window))return;
-    var darks=document.querySelectorAll('section.dark,.sell,.tl,footer');
+    var darks=document.querySelectorAll('[data-tone="dark"]');
     if(!darks.length)return;
     // The old test was `.sell top < 0`, which stayed true for the rest of the page and
     // tinted the header over the cream subscribe band too. Instead, watch whether any
@@ -767,10 +777,16 @@
         elTags.appendChild(chip);
       });
     }
+    // Measure against the rail's own box. offsetLeft is relative to the nearest
+    // positioned ancestor (.sell-stage, which carries 20px of padding), so mixing it
+    // with scrollLeft put every calculation 20px out and left the last card unreachable.
+    function offsetIn(it){
+      return it.getBoundingClientRect().left-vp.getBoundingClientRect().left+vp.scrollLeft;
+    }
     function centred(){
       var mid=vp.scrollLeft+vp.clientWidth/2,best=0,bd=Infinity;
       items.forEach(function(it,i){
-        var d=Math.abs(mid-(it.offsetLeft+it.offsetWidth/2));
+        var d=Math.abs(mid-(offsetIn(it)+it.offsetWidth/2));
         if(d<bd){bd=d;best=i;}
       });
       items.forEach(function(it,i){it.classList.toggle('on',i===best);});
@@ -781,7 +797,7 @@
       // Set the rail's own scrollLeft. scrollIntoView() walks every scrollable ancestor,
       // so on load it dragged the whole page down into this section and resize yanked
       // it back — visitors landed here instead of on the hero.
-      vp.scrollTo({left:it.offsetLeft-(vp.clientWidth-it.offsetWidth)/2,
+      vp.scrollTo({left:offsetIn(it)-(vp.clientWidth-it.offsetWidth)/2,
                    behavior:smooth&&!reduceMotion?'smooth':'auto'});
     }
     vp.addEventListener('scroll',centred,{passive:true});
@@ -844,14 +860,27 @@
     sc.addEventListener('scroll',progress,{passive:true});
     addEventListener('resize',progress);
     progress();
-    // Measure the real card pitch (card width + gap) instead of a hard-coded 320px,
-    // which matched neither the 376px desktop pitch nor the 332px mobile one.
-    function step(){
-      var a=sc.children[0],b=sc.children[1];
-      if(!a)return 320;
-      return b?(b.offsetLeft-a.offsetLeft):a.offsetWidth;
+    // Step card by card rather than by a hard-coded 320px, which matched neither the
+    // 376px desktop pitch nor the 332px mobile one. Scrolling by a pixel amount also
+    // fought the mandatory snap: the snap engine would land somewhere else entirely.
+    var cards=[].slice.call(sc.children);
+    function offsetIn(el){
+      return el.getBoundingClientRect().left-sc.getBoundingClientRect().left+sc.scrollLeft;
     }
-    function go(dir){sc.scrollBy({left:dir*step(),behavior:reduceMotion?'auto':'smooth'});}
+    function nearest(){
+      var mid=sc.scrollLeft+sc.clientWidth/2,best=0,bd=Infinity;
+      cards.forEach(function(c,i){
+        var d=Math.abs(mid-(offsetIn(c)+c.offsetWidth/2));
+        if(d<bd){bd=d;best=i;}
+      });
+      return best;
+    }
+    function go(dir){
+      var i=Math.min(cards.length-1,Math.max(0,nearest()+dir)),c=cards[i];
+      if(!c)return;
+      sc.scrollTo({left:offsetIn(c)-(sc.clientWidth-c.offsetWidth)/2,
+                   behavior:reduceMotion?'auto':'smooth'});
+    }
     var p=document.getElementById('tlPrev'),n=document.getElementById('tlNext');
     if(p)p.onclick=function(){go(-1);};
     if(n)n.onclick=function(){go(1);};
