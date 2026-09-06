@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Placeholder for a single-origin farm photograph">
+  <defs><linearGradient id="g" x1="0" y1="0" x2=".6" y2="1">
+    <stop offset="0" stop-color="#2f9e4f"/><stop offset="1" stop-color="#163a22"/></linearGradient></defs>
+  <rect width="800" height="1000" fill="url(#g)"/>
+  <circle cx="270" cy="290" r="150" fill="none" stroke="rgba(0,0,0,.12)" stroke-width="2"/>
+  <circle cx="640" cy="820" r="75" fill="none" stroke="rgba(0,0,0,.12)" stroke-width="2"/>
+  <g fill="none" stroke="#f1ede6" stroke-width="4" transform="translate(400 500)">
+    <circle r="150"/><path d="M0-150V150M-150 0H150M-106-106 106 106M106-106-106 106"/>
+  </g>
+</svg>

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Placeholder for a roasting-process photograph">
+  <defs><linearGradient id="g" x1="0" y1="0" x2=".6" y2="1">
+    <stop offset="0" stop-color="#2a2038"/><stop offset="1" stop-color="#0f0a18"/></linearGradient></defs>
+  <rect width="800" height="1000" fill="url(#g)"/>
+  <g fill="none" stroke="#b39ddb" stroke-width="4" transform="rotate(45 400 500)">
+    <rect x="255" y="355" width="290" height="290"/><rect x="300" y="400" width="200" height="200"/>
+  </g>
+</svg>

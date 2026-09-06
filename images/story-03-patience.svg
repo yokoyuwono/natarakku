@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Placeholder for a resting-and-packing photograph">
+  <defs><linearGradient id="g" x1="0" y1="0" x2=".6" y2="1">
+    <stop offset="0" stop-color="#f0561e"/><stop offset="1" stop-color="#7a2410"/></linearGradient></defs>
+  <rect width="800" height="1000" fill="url(#g)"/>
+  <circle cx="600" cy="270" r="185" fill="none" stroke="rgba(255,255,255,.25)" stroke-width="2"/>
+  <g fill="none" stroke="#f1ede6" stroke-width="4" transform="translate(400 500)">
+    <path d="M-110-110 110 110M-150-70a70 70 0 0 1 70-70M70 150a70 70 0 0 0 70-70"/>
+  </g>
+</svg>
