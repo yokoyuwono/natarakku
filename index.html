@@ -21,8 +21,10 @@
     --paper-mut:#5c574e;
     --paper-soft:#9a948a;
     --line:#d9d2c6;
-    --font-marker:"Permanent Marker",cursive;
-    --font-cond:"Bebas Neue","Oswald",sans-serif;
+    /* fallbacks are chosen for similar metrics — a generic cursive/sans is much wider
+       than these faces and blows out headings if the webfont fails to load */
+    --font-marker:"Permanent Marker","Bradley Hand","Segoe Print",cursive;
+    --font-cond:"Bebas Neue","Oswald","Arial Narrow","Haettenschweiler",sans-serif;
     --font-mono:"DM Mono",ui-monospace,"SFMono-Regular",monospace;
     --ease:cubic-bezier(.22,.61,.21,1);
     --cur:#f0561e;
@@ -51,7 +53,9 @@
   .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--cur);display:inline-block}
 
   /* two-voice type */
-  .two{text-transform:uppercase;line-height:.9;letter-spacing:.5px}
+  /* overflow-wrap is a backstop: if a display face fails to load, the fallback's wider
+     metrics must not push a long word past the viewport edge */
+  .two{text-transform:uppercase;line-height:.9;letter-spacing:.5px;overflow-wrap:break-word}
   .vk{font-family:var(--font-cond);font-weight:400}
   .vm{font-family:var(--font-marker);font-weight:400}
   .accent{color:var(--cur)}
@@ -81,9 +85,18 @@
     font-size:11px;width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-mono)}
 
   /* ************ HERO ************ */
-  .hero{min-height:100vh;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;
-    padding:150px 0 90px;position:relative;background:
+  /* .hero is the full-bleed band; .hero-in carries the shared .wrap container so the
+     hero copy sits on the same gutter as every other section at any viewport width. */
+  .hero{min-height:100vh;min-height:100svh;display:flex;align-items:center;
+    padding:150px 0 90px;position:relative;overflow:hidden;background:
       radial-gradient(1200px 600px at 85% -10%,#f8e3cf 0,transparent 60%),var(--cream);}
+  .hero-in{width:100%;display:grid;grid-template-columns:1.1fr .9fr;gap:40px;
+    align-items:center;position:relative;z-index:2}
+  /* grid items default to min-width:auto, so the bag rail's min-content would otherwise
+     force the whole column — copy included — wider than the viewport on phones */
+  .hero-in>*{min-width:0}
+  /* particle canvas lives inside the hero so it can never paint over later sections */
+  .hero-beans{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;z-index:1}
   .hero-pills{display:flex;gap:12px;margin-bottom:34px;flex-wrap:wrap}
   .pill{border:1.5px solid var(--line);border-radius:999px;padding:8px 16px;background:#fff0;
     font-family:var(--font-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase;
@@ -104,6 +117,7 @@
 
   /* hero bags montage */
   .stage{position:relative;height:520px;overflow:hidden}
+  .stage-rail{position:absolute;inset:0}
   .halo{position:absolute;inset:0;display:grid;place-items:center}
   .halo::before{content:"";width:440px;height:440px;border-radius:50%;
     background:radial-gradient(rgba(240,86,30,.22) 22%,transparent 22%) 0 0/22px 22px;
@@ -124,12 +138,27 @@
   .bag-tag{position:absolute;right:2%;bottom:8px;background:#0a0806;color:var(--cream);
     font-family:var(--font-mono);font-size:12px;padding:10px 16px;border-radius:40px;z-index:4}
   .bag-tag b{color:var(--orange)}
-  @media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:120px}.stage{height:380px}}
+  /* Below 900px the three 190px bags can no longer sit side by side (they overlapped
+     badly on phones), so the montage becomes a snap rail — same pattern as .sell-vp. */
+  @media(max-width:900px){
+    .hero{padding-top:120px}
+    .hero-in{grid-template-columns:1fr}
+    .stage{height:auto;overflow:visible;text-align:center}
+    .halo{display:none}
+    .stage-rail{position:static;display:flex;gap:14px;overflow-x:auto;
+      scroll-snap-type:x mandatory;scrollbar-width:none;-webkit-overflow-scrolling:touch;
+      padding:8px 22px 18px;margin:0 -22px}
+    .stage-rail::-webkit-scrollbar{display:none}
+    .stage-rail .bag{position:static;flex:0 0 min(62%,210px);width:auto;
+      transform:none;scroll-snap-align:center}
+    .bag-tag{position:static;display:inline-block;margin-top:2px}
+  }
 
   /* ************ SECTIONS ************ */
   section{position:relative}
   .sec-h{padding:40px 0 30px}
   .story{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:110px 0}
+  .story>*{min-width:0}
   .story .num{font-family:var(--font-cond);font-size:22px;letter-spacing:.2em;color:var(--cur);margin-bottom:8px}
   .story h2{font-size:clamp(38px,4.6vw,66px);margin:8px 0 4px}
   .story p{color:var(--paper-mut);max-width:420px;font-size:14px;margin-top:16px}
@@ -186,7 +215,11 @@
   .sell-name{font-family:var(--font-cond);font-size:clamp(40px,5vw,68px);letter-spacing:.5px;text-transform:uppercase;line-height:.95}
   .sell-price{font-family:var(--font-mono);font-size:15px;color:var(--paper-soft);margin:14px 0 24px}
   .sell-cta{display:inline-block}
-  @media(max-width:900px){.sell-item{flex:0 0 300px}.sell-art{width:206px}.sell-stage{padding:0 8px}.sell-arrow{width:46px;height:46px;font-size:22px}.sell-item .sell-tag{top:-12px}}
+  /* arrows sit flush at narrow widths — the -12px desktop overhang runs off a 375px screen */
+  @media(max-width:900px){.sell-item{flex:0 0 300px}.sell-art{width:206px}.sell-stage{padding:0 8px}
+    .sell-arrow{width:46px;height:46px;font-size:22px}
+    .sell-arrow.left{left:2px}.sell-arrow.right{right:2px}
+    .sell-item .sell-tag{top:-12px}}
 
   /* ************ STORY TIMELINE (native swipe) ************ */
   .tl{position:relative;background:var(--black);color:var(--cream);padding:110px 0 50px;overflow:hidden}
@@ -314,7 +347,9 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="top">
-  <div class="wrap" style="position:relative;z-index:2">
+  <canvas id="beans" class="hero-beans" aria-hidden="true"></canvas>
+  <div class="wrap hero-in">
+   <div class="hero-copy">
     <div class="hero-pills reveal">
       <span class="pill"><span class="g">●</span> Small Batch</span>
       <span class="pill">Single Origin</span>
@@ -334,12 +369,15 @@
     </div>
   </div>
 
-  <div class="stage reveal" style="position:relative;z-index:1">
+   <div class="stage reveal">
     <div class="halo"></div>
+    <div class="stage-rail">
     <div class="bag b1"><div class="top" style="background:#fde8de"><svg viewBox="0 0 24 24" fill="none" stroke="#d64a17" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 9h18M12 3v18"/></svg></div><div class="lbl"><div class="kicker">No.01</div><div class="name">The Awakening</div><div class="origin">Single Origin · 250g</div></div></div>
     <div class="bag b2"><div class="top" style="background:#fdf0e0"><svg viewBox="0 0 24 24" fill="none" stroke="#f0561e" stroke-width="1.2"><path d="M5 5c6 0 8 3 8 7s-2 7-8 7M13 7c3 0 5 2 5 5s-2 5-5 5"/></svg></div><div class="lbl"><div class="kicker">No.02</div><div class="name">The Wanderer</div><div class="origin">Single Origin · 250g</div></div></div>
     <div class="bag b3"><div class="top" style="background:#e8e9f7"><svg viewBox="0 0 24 24" fill="none" stroke="#6b4b9a" stroke-width="1.2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/></svg></div><div class="lbl"><div class="kicker">No.03</div><div class="name">The Still</div><div class="origin">Single Origin · 250g</div></div></div>
+    </div>
     <div class="bag-tag"><b>$32</b> · Starter Bundle</div>
+   </div>
   </div>
 </section>
 
@@ -504,9 +542,6 @@
   </div>
 </footer>
 
-<!-- ============ canvasa particles (hero) ============ -->
-<canvas id="beans" style="position:fixed;inset:0;pointer-events:none;z-index:0"></canvas>
-
 <script>
 (function(){
   var CURSOR=document.getElementById('cursor');
@@ -570,7 +605,7 @@
   sellVp.innerHTML=PRODUCTS.map(function(p,i){
     return '<article class="sell-item'+(i===1?' on':'')+'" data-i="'+i+'">'+
       '<span class="sell-cone"></span>'+
-      '<span class="sell-tag"><small>Starting at</small><b>'+p.price.replace('from ','$')+'</b></span>'+
+      '<span class="sell-tag"><small>Starting at</small><b>'+p.price.replace('from ','')+'</b></span>'+
       '<div class="sell-art">'+bagSVG(p.accent,p.name,p.origin)+'</div></article>';
   }).join('');
   var sellItems=[].slice.call(sellVp.querySelectorAll('.sell-item'));
@@ -583,8 +618,23 @@
   sellVp.addEventListener('scroll',function(){sellCenter()},{passive:true});sellCenter();
   document.getElementById('sellPrev').onclick=function(){sellVp.scrollBy({left:-sellItems[0].offsetWidth*1.05,behavior:'smooth'})};
   document.getElementById('sellNext').onclick=function(){sellVp.scrollBy({left:sellItems[0].offsetWidth*1.05,behavior:'smooth'})};
-  function sellInit(){sellItems[1].scrollIntoView({behavior:'auto',block:'nearest',inline:'center'});sellCenter();}
-  requestAnimationFrame(sellInit);window.addEventListener('resize',sellInit);
+  // Centre an item by setting the rail's own scrollLeft. scrollIntoView() was used here
+  // before, but it walks every scrollable ancestor — so on load it dragged the whole page
+  // down into this section, and on resize it yanked it back again.
+  function sellCentreOn(i,smooth){
+    var it=sellItems[i];if(!it)return;
+    sellVp.scrollTo({left:it.offsetLeft-(sellVp.clientWidth-it.offsetWidth)/2,
+                     behavior:smooth?'smooth':'auto'});
+  }
+  function sellInit(){sellCentreOn(1,false);sellCenter();}
+  requestAnimationFrame(sellInit);
+  // only re-centre when the width actually changed — on mobile the address bar
+  // showing/hiding fires resize constantly and would reset the rail mid-swipe
+  var sellW=innerWidth,sellT;
+  window.addEventListener('resize',function(){
+    if(innerWidth===sellW)return;sellW=innerWidth;
+    clearTimeout(sellT);sellT=setTimeout(sellInit,150);
+  });
 
   // plan toggle
   var prices=['$23.00','$22.00','$21.00'],sum=document.getElementById('sumv');
@@ -608,18 +658,27 @@
   document.getElementById('tlPrev').onclick=function(){tlScroll.scrollBy({left:-320,behavior:'smooth'})};
   document.getElementById('tlNext').onclick=function(){tlScroll.scrollBy({left:320,behavior:'smooth'})};
 
-  // ******** canvas beans (physics-feel) — desktop only ********
+  // ******** canvas beans (physics-feel) — desktop only, scoped to the hero ********
   var isTouch=window.matchMedia('(pointer:coarse)').matches;
   if(!isTouch){
-  var cv=document.getElementById('beans'),cx2=cv.getContext('2d'),beans=[],W,H;
-  function rs(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+  var cv=document.getElementById('beans'),cx2=cv.getContext('2d'),beans=[],W,H,heroTop=0;
+  function rs(){
+    // back the canvas with devicePixelRatio so the beans aren't blurry on retina
+    var dpr=Math.min(window.devicePixelRatio||1,2);
+    W=cv.offsetWidth;H=cv.offsetHeight;
+    cv.width=Math.round(W*dpr);cv.height=Math.round(H*dpr);
+    cx2.setTransform(dpr,0,0,dpr,0,0);
+    heroTop=cv.getBoundingClientRect().top+window.scrollY;
+  }
   window.addEventListener('resize',rs);rs();
   for(var i=0;i<26;i++){beans.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.6,vy:(Math.random()-.5)*.6,r:2+Math.random()*3});}
   function frame(){
     cx2.clearRect(0,0,W,H);
+    // the cursor is in viewport coords but the canvas is hero-local, so shift by scroll
+    var px=cx,py=cy+window.scrollY-heroTop;
     beans.forEach(function(b){
-      // gentle attraction to cursor
-      var dx=cx-b.x,dy=cy-b.y,d=Math.hypot(dx,dy)||1;
+      // beans scatter away from the cursor
+      var dx=px-b.x,dy=py-b.y,d=Math.hypot(dx,dy)||1;
       if(d<220){b.vx+=(dx/d)*-.24;b.vy+=(dy/d)*-.24;}
       b.vx*=.965;b.vy*=.965;b.x+=b.vx;b.y+=b.vy;
       if(b.x<0||b.x>W)b.vx*=-1;if(b.y<0||b.y>H)b.vy*=-1;
