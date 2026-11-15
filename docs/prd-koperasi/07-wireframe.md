@@ -21,6 +21,8 @@ prinsip di bawah. Notasi: `[Tombol]`, `[Pilihan v]` = dropdown, `( )`/`(o)` = ra
 | **Dapat ditelusuri** | Setiap angka di laporan dapat diklik sampai dokumen sumber |
 | **Responsif** | Back-office: desktop ≥ 1280 px, tablet 768 px; POS: tablet/desktop landscape & Android 6"; aplikasi anggota: mobile |
 | **Aksesibel** | Kontras AA, ukuran sentuh ≥ 44 px, teks dapat diperbesar, tidak bergantung warna saja |
+| **Hidup tapi ringan** | Micro-interaction & transisi singkat (100–300 ms) untuk umpan balik; katalog lengkap & token di [11 — Design System & Animasi](./11-design-system-dan-animasi.md) |
+| **Status lengkap** | Setiap layar punya status memuat, kosong, error, berhasil, offline ([09 §9](./09-error-handling-dan-edge-case.md#9-penanganan-error-di-antarmuka-web-pos-mobile), [11 §6](./11-design-system-dan-animasi.md#6-pola-status-komponen-wajib-di-semua-layar)) |
 
 ## 2. Sitemap
 

@@ -297,6 +297,9 @@ Spesifikasi lengkap di [03 — Rule Engine](./03-rule-engine.md).
 
 ## 17. User Story Kunci & Acceptance Criteria
 
+> Semua fitur juga wajib memenuhi kontrak lintas modul: error & edge case ([09](./09-error-handling-dan-edge-case.md)),
+> API/event/rumus/validasi/izin ([10](./10-spesifikasi-teknis-detail.md)), serta status UI & animasi ([11](./11-design-system-dan-animasi.md)).
+
 ### US-01 — Kasir melayani anggota dengan harga anggota dan poin (POS-02, POS-03, LOY-01)
 
 > Sebagai **kasir**, saya ingin memindai kartu anggota agar harga anggota dan poin otomatis diterapkan.

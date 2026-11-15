@@ -58,13 +58,13 @@ gantt
 
 | Fase | Fokus | Jumlah tugas | Estimasi tugas langsung (HO) | Termasuk overhead ×1,6 (HO) |
 |---|---|---|---|---|
-| F0 | Fondasi | 27 | 140 | ±224 |
-| F1 | MVP Inti | 57 | 298 | ±477 |
-| F2 | POS, Inventori, Loyalty | 43 | 220 | ±352 |
-| F3 | Pinjaman, Workflow, App, Pembayaran | 35 | 163 | ±261 |
+| F0 | Fondasi | 29 | 148 | ±237 |
+| F1 | MVP Inti | 58 | 303 | ±485 |
+| F2 | POS, Inventori, Loyalty | 44 | 224 | ±358 |
+| F3 | Pinjaman, Workflow, App, Pembayaran | 36 | 167 | ±267 |
 | F4 | Tutup Tahunan, SHU, Laporan Lanjut | 24 | 111 | ±178 |
 | F5 | Hardening, Pilot, Go-Live | 19 | 104 | ±166 |
-| **Total** | | **205** | **1.036** | **±1.658** (+15% buffer ≈ 1.900 HO) |
+| **Total** | | **210** | **1.057** | **±1.691** (+15% buffer ≈ 1.945 HO) |
 
 > **Overhead ×1,6** mencakup code review, integrasi antar modul, perbaikan bug, rapat sprint, dokumentasi, dan
 > dukungan pilot yang tidak dirinci per tugas. Kapasitas tim inti ±11 FTE × ±220 hari kerja efektif ≈ 2.400 HO,
@@ -96,6 +96,8 @@ gantt
 - [ ] `F0-ARCH-10` — Observability: OpenTelemetry, log terstruktur (masking PII), Sentry, dashboard dasar · OPS · 4 HO
 - [ ] `F0-ARCH-11` — Shell Next.js back-office: layout, navigasi, tabel/form dasar, format id-ID · FE · 6 HO
 - [ ] `F0-ARCH-12` — Paket `@kop/ui` dari design system · FE · 5 HO · dep: F0-DISC-05
+- [ ] `F0-ARCH-13` — Kerangka error: format RFC 9457, registry kode error (dok. 09 §4), exception filter NestJS, idempotency-key middleware, error boundary & komponen status (memuat/kosong/error) di web · BE, FE · 5 HO
+- [ ] `F0-ARCH-14` — Paket `@kop/motion`: token gerak, preset, `useReducedMotion`, Storybook (dok. 11) · FE · 3 HO
 
 ### Epic F0-PLT/IAM — Platform & Akses
 - [ ] `F0-IAM-01` — Auth: login, Argon2id, JWT + refresh rotasi, lockout, TOTP 2FA · BE · 6 HO
@@ -178,6 +180,7 @@ gantt
 - [ ] `F1-ORG-01` — Profil koperasi, cabang, unit usaha, pengurus & pengawas, dokumen AD/ART · BE, FE · 4 HO
 - [ ] `F1-QA-01` — E2E Playwright alur F1 (daftar anggota → setor → jurnal → laporan → tutup buku) · QA · 6 HO
 - [ ] `F1-QA-02` — Pilot internal dengan data contoh 1 koperasi + perbaikan · semua · 8 HO
+- [ ] `F1-QA-03` — Tes otomatis edge case F1 (EC-01..EC-10, EC-28..EC-32, EC-40..EC-42) & tes setiap kode error endpoint F1 · QA, BE · 5 HO
 
 ---
 
@@ -214,6 +217,7 @@ gantt
 - [ ] `F2-POS-16` — Laporan kasir & penjualan (shift, kasir, metode bayar, anggota vs non-anggota, produk) · BE, FE · 4 HO
 - [ ] `F2-POS-17` — Matriks uji perangkat keras (3 printer, 2 scanner, 3 tablet Android murah) · QA · 4 HO
 - [ ] `F2-POS-18` — Uji chaos offline: putus koneksi di tiap langkah, unggah ganda, jam perangkat salah · QA · 4 HO
+- [ ] `F2-POS-19` — Umpan balik interaksi POS: animasi CSS POS-A1..A12, suara, getar, mode performa (Penuh/Minimal/Mati) + uji frame di perangkat referensi · FE · 4 HO
 
 ### Epic F2-LOY — Loyalty
 - [ ] `F2-LOY-01` — Akun poin (anggota & pelanggan non-anggota), ledger imutabel, bucket FIFO · BE · 5 HO
@@ -271,6 +275,7 @@ gantt
 - [ ] `F3-APP-06` — Notifikasi push, pengumuman, profil & permintaan ubah data / hak subjek data · MOB, BE · 5 HO
 - [ ] `F3-APP-07` — Cache offline & mode hemat data · MOB · 3 HO
 - [ ] `F3-APP-08` — Rilis beta (internal testing Play Store & TestFlight) · MOB · 2 HO
+- [ ] `F3-APP-09` — Animasi & haptics aplikasi anggota (APP-A1..A11) dengan Reanimated + mode kurangi gerakan · MOB · 4 HO
 
 ### Epic F3-INT — Pembayaran & Notifikasi
 - [ ] `F3-INT-01` — Adapter payment gateway (QRIS dinamis, VA per anggota), verifikasi signature webhook, idempotensi · BE · 8 HO
@@ -377,6 +382,8 @@ Sebuah tugas dinyatakan selesai bila:
 - [ ] UI memenuhi checklist aksesibilitas dasar & teks Bahasa Indonesia ditinjau
 - [ ] Fitur di balik feature flag bila belum siap untuk semua tenant
 - [ ] Didemokan ke PO dan diterima sesuai acceptance criteria
+- [ ] Kode error & edge case sesuai dok. 09 §12; endpoint uang/stok/poin teruji idempoten
+- [ ] Layar punya status memuat/kosong/error/berhasil; animasi memakai token `@kop/motion` dan lulus uji reduced motion (dok. 11 §9)
 
 ## 11. Strategi Pengujian
 
@@ -421,4 +428,4 @@ Sebuah tugas dinyatakan selesai bila:
 | Q9 | Kapan modul syariah (KSPPS) dibutuhkan pasar? Menentukan prioritas backlog | PO | Minggu 16 |
 | Q10 | Batas default transaksi non-tunai offline per anggota & lama maksimum offline sebelum POS terkunci? | PO, pilot | Minggu 18 |
 
-[← 07 Wireframe](./07-wireframe.md) · [Kembali ke daftar isi](./README.md)
+[← 07 Wireframe](./07-wireframe.md) · [Lanjut ke 09 — Error Handling & Edge Case →](./09-error-handling-dan-edge-case.md)

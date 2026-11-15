@@ -6,8 +6,8 @@
 |---|---|
 | Nama kerja produk | **KoperasiOS** (nama kerja, dapat diganti) |
 | Jenis dokumen | Product Requirements Document (PRD) |
-| Versi | 1.0 — Draft untuk review |
-| Tanggal | 14 November 2026 |
+| Versi | 1.1 — Draft untuk review |
+| Tanggal | 15 November 2026 |
 | Status | Draft, menunggu review stakeholder (pengurus koperasi, akuntan, tech lead) |
 | Pemilik dokumen | Product Owner (TBD) |
 | Reviewer wajib | Tech Lead, Akuntan/KAP mitra, perwakilan 3–5 koperasi pilot |
@@ -26,10 +26,17 @@
 | 06 | [ERD](./06-erd.md) | Entity Relationship Diagram per domain + kamus data tabel inti + konvensi database |
 | 07 | [Konsep Wireframe](./07-wireframe.md) | Sitemap, prinsip UI, wireframe layar utama (back-office, POS, rule builder, aplikasi anggota) |
 | 08 | [Task Todo & Roadmap](./08-task-todo.md) | Fase, milestone, Gantt, daftar tugas per epic, DoD, checklist go-live, pertanyaan terbuka |
+| 09 | [Error Handling & Edge Case](./09-error-handling-dan-edge-case.md) | Format error API, katalog kode error, idempotensi, konkurensi, retry, penanganan offline/webhook, pola error UI, logging, 42 edge case |
+| 10 | [Spesifikasi Teknis Detail](./10-spesifikasi-teknis-detail.md) | Konvensi & katalog API, katalog event, state machine, rumus kalkulasi, validasi field, penomoran, matriks izin, jadwal job, keamanan, notifikasi, format impor |
+| 11 | [Design System & Animasi](./11-design-system-dan-animasi.md) | Token desain & gerak, katalog animasi ringan per layar (back-office, rule builder, POS, aplikasi anggota), aksesibilitas, anggaran kinerja |
+| 12 | [Panduan Delegasi ke Claude Code](./12-panduan-delegasi-claude-code.md) | Status kesiapan, pembagian kerja manusia vs AI, urutan sesi, template prompt, checklist review + [`CLAUDE.template.md`](./CLAUDE.template.md) |
 
 **Cara membaca:** mulai dari dokumen 01 untuk konteks, lalu 02 untuk cakupan. Dokumen 03 dan 04 adalah
 spesifikasi inti yang membedakan produk ini (rule engine kustom dan akuntansi standar). Dokumen 05–07
 menerjemahkan kebutuhan ke alur, data, dan tampilan. Dokumen 08 adalah rencana eksekusi.
+
+Dokumen 09–11 adalah **kontrak teknis lintas modul** (error, API/event/rumus, UI & animasi) yang wajib diikuti
+setiap fitur. Dokumen 12 menjelaskan cara mendelegasikan implementasi ke Claude Code.
 
 Semua diagram ditulis dalam **Mermaid** sehingga tampil langsung di GitHub/GitLab dan dapat diedit sebagai teks.
 
@@ -119,6 +126,7 @@ pilot dan go-live di minggu ke-52.
 | Versi | Tanggal | Perubahan | Oleh |
 |---|---|---|---|
 | 1.0 | 2026-11-14 | Draft awal lengkap (analisa, fitur, rule engine, COA, flowchart, ERD, wireframe, todo) | Tim Produk |
+| 1.1 | 2026-11-15 | Tambah dokumen 09 (error & edge case), 10 (spesifikasi teknis detail), 11 (design system & animasi), 12 (panduan delegasi) + template CLAUDE.md; tugas & DoD di 08 diperbarui | Tim Produk |
 
 ## Referensi
 
